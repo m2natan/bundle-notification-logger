@@ -1,0 +1,166 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Logger Service",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "LoggerService"
+    }
+  ],
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/logs": {
+      "get": {
+        "summary": "Find all log entries",
+        "operationId": "findAllLogs",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/loggerpbFindAllLogsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Log"
+        ]
+      },
+      "post": {
+        "summary": "Create a new log entry",
+        "operationId": "createLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/loggerpbLog"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/loggerpbCreateLogRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Log"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "loggerpbCreateLogRequest": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/loggerpbLogStatus"
+        },
+        "fromApplication": {
+          "type": "string"
+        },
+        "dateTime": {
+          "type": "string"
+        }
+      }
+    },
+    "loggerpbFindAllLogsResponse": {
+      "type": "object",
+      "properties": {
+        "logs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/loggerpbLog"
+          }
+        }
+      }
+    },
+    "loggerpbLog": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/loggerpbLogStatus"
+        },
+        "fromApplication": {
+          "type": "string"
+        },
+        "dateTime": {
+          "type": "string"
+        }
+      }
+    },
+    "loggerpbLogStatus": {
+      "type": "string",
+      "enum": [
+        "INFO",
+        "WARNING",
+        "ERROR",
+        "DEBUG",
+        "FATAL",
+        "UNKNOWN"
+      ],
+      "default": "INFO"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

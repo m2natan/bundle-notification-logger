@@ -1,0 +1,19 @@
+syntax = "proto3";
+package loggerpb;
+
+enum LogStatus{
+    INFO = 0;
+    WARNING = 1;
+    ERROR = 2;
+    DEBUG = 3;
+    FATAL = 4;
+    UNKNOWN = 5;
+}
+
+message Log {
+    string id = 1;
+    string message = 2;
+    LogStatus status = 3;
+    string from_application = 4;
+    string date_time = 5;
+}

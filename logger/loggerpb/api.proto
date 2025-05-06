@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package loggerpb;
+
+import "loggerpb/message.proto";
+
+service LoggerService {
+    rpc CreateLog(CreateLogRequest) returns (Log);
+    rpc FindAllLogs(FindAllLogsRequest) returns (FindAllLogsResponse);
+}
+
+message CreateLogRequest {
+    string message = 1;
+    LogStatus status = 2;
+    string from_application = 3;
+    string date_time = 4;
+}
+message FindAllLogsRequest {
+    repeated Log logs = 1;
+}
+message FindAllLogsResponse {
+    repeated Log logs = 1;
+}

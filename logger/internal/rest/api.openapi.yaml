@@ -1,0 +1,21 @@
+openapiOptions:
+  file:
+    - file: "loggerpb/message.proto"
+      option:
+        info:
+          title: Logger Service
+          version: "1.0.0"
+        basePath: /
+  method:
+    - method: loggerpb.LoggerService.CreateLog
+      option:
+        operationId: createLog
+        tags:
+          - Log
+        summary: Create a new log entry
+    - method: loggerpb.LoggerService.FindAllLogs
+      option:
+        operationId: findAllLogs
+        tags:
+          - Log
+        summary: Find all log entries

@@ -1,0 +1,9 @@
+type: google.api.Service
+config_version: 3
+http:
+  rules:
+    - selector: loggerpb.LoggerService.CreateLog
+      post: /api/v1/logs
+      body: "*"
+    - selector: loggerpb.LoggerService.FindAllLogs
+      get: /api/v1/logs
