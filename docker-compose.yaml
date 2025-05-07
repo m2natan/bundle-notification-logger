@@ -4,13 +4,18 @@ services:
       context: ./notification
       dockerfile: Dockerfile
     container_name: notification-service
+    env_file:
+      - .notification.env
+    ports:
+      - "8085:8085"
+      - "50055:50055"
     depends_on:
       - postgres
       - pgadmin
       - kafka
     environment:
-      - GRPC_PORT=8085
-      - HTTP_PORT=50055
+      - REST_PORT=8085
+      - GRPC_PORT=50055
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DATABASE=notificaiton
@@ -23,13 +28,18 @@ services:
       context: ./logger
       dockerfile: Dockerfile
     container_name: logger-service
+    env_file:
+      - .log.env
+    ports:
+      - "8082:8082"
+      - "50052:50052"
     depends_on:
       - postgres
       - pgadmin
       - kafka
     environment:
-      - GRPC_PORT=8082
-      - HTTP_PORT=50052
+      - REST_PORT=8082
+      - GRPC_PORT=50052
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DATABASE=log

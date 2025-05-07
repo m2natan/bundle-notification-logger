@@ -21,8 +21,8 @@ import (
 	"github.com/Kifiya-Financial-Technology/Logger/loggerpb"
 	"github.com/Kifiya-Financial-Technology/Logger/lswagger"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	_ "github.com/lib/pq" // 👈 required for sql.Open("postgres", ...)
 	pg "gorm.io/driver/postgres"
-    _ "github.com/lib/pq" // 👈 required for sql.Open("postgres", ...)
 
 	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
@@ -42,13 +42,13 @@ const (
 )
 
 func main() {
-	if err := godotenv.Load(".env"); err != nil {
+	if err := godotenv.Load(".log.env"); err != nil {
 		slog.Println("⚠️ No .env file found or failed to load it")
 	} else {
 		slog.Println("✅ .env file loaded")
 	}
 
-	port := os.Getenv("PORT")
+	port := os.Getenv("REST_PORT")
 	grpcPort := os.Getenv("GRPC_PORT")
 	dbHost := os.Getenv("POSTGRES_HOST")
 	dbPort := os.Getenv("POSTGRES_PORT")
@@ -56,6 +56,7 @@ func main() {
 	dbPass := os.Getenv("POSTGRES_PASSWORD")
 	dbName := os.Getenv("POSTGRES_DATABASE")
 
+	slog.Printf(port, grpcPort, dbHost, dbPort, dbUser, dbPass, dbName)
 	db, err := init_database(dbHost, dbPort, dbUser, dbPass, dbName)
 	if err != nil {
 		slog.Fatalf("❌ failed to connect to DB: %v", err)

@@ -83,7 +83,7 @@ func init_grpc_client(grpcPort string, grpcAddress string) (net.Listener, *grpc.
 func main() {
 
 	// Load environment variables
-	if err := godotenv.Load(".env"); err != nil {
+	if err := godotenv.Load(".notification.env"); err != nil {
 		log.Println("⚠️ No .env file found or failed to load it")
 	} else {
 		log.Println("✅ .env file loaded")
@@ -97,6 +97,7 @@ func main() {
 	dbUser := os.Getenv("POSTGRES_USER")
 	dbPass := os.Getenv("POSTGRES_PASSWORD")
 	dbName := os.Getenv("POSTGRES_DATABASE")
+	log.Printf(port, grpcPort, dbHost, dbPort, dbUser, dbPass, dbName)
 
 	db, err := init_database(dbHost, dbPort, dbUser, dbPass, dbName)
 	if err != nil {

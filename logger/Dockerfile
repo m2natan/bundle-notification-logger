@@ -23,4 +23,6 @@
     
     # Copy just the binary and .env file
     COPY --from=builder /logger/logger .
-    COPY --from=builder /logger/.env .
+
+    EXPOSE 8085
+    EXPOSE 50055

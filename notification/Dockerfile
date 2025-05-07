@@ -23,4 +23,6 @@
     
     # Copy just the binary and .env file
     COPY --from=builder /notification/notification .
-    COPY --from=builder /notification/.env .
+
+    EXPOSE 8082
+    EXPOSE 50052
